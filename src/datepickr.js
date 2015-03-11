@@ -26,7 +26,6 @@
 
         this.container.className = 'datepickr-calendar';
         this.navigation.className = 'datepickr-current-month';
-        config = config || {};
 
         this.documentClick = this.documentClick.bind(this);
         this.calendarClick = this.calendarClick.bind(this);
@@ -65,7 +64,7 @@
             }
         }
 
-        this.init();
+        this.init(config || {});
     };
 
     datepickr.prototype = {
@@ -119,10 +118,12 @@
         },
 
         wrap: function () {
-            this.$wrapperElement = $('<div class="datepickr-wrapper">')
-                .appendTo(this.el.parentNode)
-                .append(this.el);
+            this.$wrapperElement = $('<div class="datepickr-wrapper">');
 
+            if(this.el.parentNode)
+                this.$wrapperElement.appendTo(this.el.parentNode);
+
+            this.$wrapperElement.append(this.el);
             this.wrapperElement = this.$wrapperElement.get(0);
         },
 
@@ -176,7 +177,31 @@
                     },
                     Y: function () {
                         return dateObj.getFullYear();
-                    }
+                    },                    
+                    a: function () {
+                        return dateObj.getHours() > 12 ? 'pm' : 'am';
+                    },
+                    A: function () {
+                        return dateObj.getHours() > 12 ? 'PM' : 'AM';
+                    },
+                    g: function () {
+                        return dateObj.getHours() % 12 > 0 ? dateObj.getHours() % 12 : 12;
+                    },
+                    G: function () {
+                        return dateObj.getHours() > 0 ? dateObj.getHours() : "12";
+                    },
+                    h: function () {
+                        return dateObj.getHours() % 12 > 0 ? dateObj.getHours() % 12 : 12;
+                    },
+                    H: function () {
+                        return dateObj.getHours();
+                    },
+                    i: function () {
+                        return dateObj.getMinutes() < 10 ? '0' + dateObj.getMinutes() : dateObj.getMinutes();
+                    },
+                    s: function () {
+                        return dateObj.getSeconds() < 10 ? '0' + dateObj.getSeconds() : dateObj.getSeconds();
+                    },
                 },
                 formatPieces = dateFormat.split('');
 
@@ -437,6 +462,7 @@
     };
 
     $.datepickr = function (selector, config) {
+        console.log("config:", config);
         var elements,
             createInstance,
             instances = [],
@@ -456,5 +482,5 @@
         return instances;
     };
 
-    $.fn.datepickr = function(){return $.datepickr.apply(null, [this].concat(arguments));}
+    $.fn.datepickr = function(){return $.datepickr.apply(null, [this].concat([].slice.call(arguments)));}
 })(jQuery)
