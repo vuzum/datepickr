@@ -13,9 +13,7 @@
 
 (function($){
     'use strict';
-    /**
-     * @constructor
-     */
+
     var datepickr = function (element, config) {
         var self = this;
 
