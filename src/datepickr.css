@@ -99,6 +99,11 @@
 	cursor: pointer;
 }
 
+.datepickr-calendar .prev-month .datepickr-day,
+.datepickr-calendar .next-month .datepickr-day {
+	opacity: .4;
+}
+
 .datepickr-calendar .datepickr-day:hover {
 	color: #C77405;
 	background-color: #fdf5ce;

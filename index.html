@@ -3,7 +3,7 @@
     <head>
         <title>Sample datepickrs</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="src/datepickr.min.css">
+        <link rel="stylesheet" type="text/css" href="src/datepickr.css">
         <style>
             body {
                 font-family: Verdana;
@@ -32,7 +32,7 @@
     <body>
         <h1>datepickr examples</h1>
 
-        <p><input id="datepickr" placeholder="Nothin' special"></p>
+        <p><input id="datepickr" class="datepickr" placeholder="Nothin' special"></p>
 
         <p><input class="datepickr" placeholder="Custom formatting"></p>
 
@@ -47,36 +47,37 @@
 
         <p><input id="someFrench" class="sil-vous-plait" placeholder="En francais"></p>
 
-        <script src="src/datepickr.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="src/datepickr.js"></script>
         <script>
             // Regular datepickr
-            datepickr('#datepickr');
+            $('#datepickr').datepickr();
 
-            // Custom date format
-            datepickr('.datepickr', { dateFormat: 'd-m-Y'});
+            // // Custom date format
+            // datepickr('.datepickr', { dateFormat: 'd-m-Y'});
 
-            // Min and max date
-            datepickr('#minAndMax', {
-                // few days ago
-                minDate: new Date().getTime() - 2.592e8,
-                // few days from now
-                maxDate: new Date().getTime() + 2.592e8
-            });
+            // // Min and max date
+            // datepickr('#minAndMax', {
+            //     // few days ago
+            //     minDate: new Date().getTime() - 2.592e8,
+            //     // few days from now
+            //     maxDate: new Date().getTime() + 2.592e8
+            // });
 
-            // datepickr on an icon, using altInput to store the value
-            // altInput must be a direct reference to an input element (for now)
-            datepickr('.calendar-icon', { altInput: document.getElementById('calendar-input') });
+            // // datepickr on an icon, using altInput to store the value
+            // // altInput must be a direct reference to an input element (for now)
+            // datepickr('.calendar-icon', { altInput: document.getElementById('calendar-input') });
 
-            // If the input contains a value, datepickr will attempt to run Date.parse on it
-            datepickr('[title="parseMe"]');
+            // // If the input contains a value, datepickr will attempt to run Date.parse on it
+            // datepickr('[title="parseMe"]');
 
-            // Overwrite the global datepickr prototype
-            // Won't affect previously created datepickrs, but will affect any new ones
-            datepickr.prototype.l10n.months.shorthand = ['janv', 'févr', 'mars', 'avril', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
-            datepickr.prototype.l10n.months.longhand = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-            datepickr.prototype.l10n.weekdays.shorthand = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
-            datepickr.prototype.l10n.weekdays.longhand = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-            datepickr('#someFrench.sil-vous-plait', { dateFormat: '\\le j F Y' });
+            // // Overwrite the global datepickr prototype
+            // // Won't affect previously created datepickrs, but will affect any new ones
+            // datepickr.prototype.l10n.months.shorthand = ['janv', 'févr', 'mars', 'avril', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
+            // datepickr.prototype.l10n.months.longhand = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+            // datepickr.prototype.l10n.weekdays.shorthand = ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'];
+            // datepickr.prototype.l10n.weekdays.longhand = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+            // datepickr('#someFrench.sil-vous-plait', { dateFormat: '\\le j F Y' });
         </script>
     </body>
 </html>
