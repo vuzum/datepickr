@@ -462,7 +462,6 @@
     };
 
     $.datepickr = function (selector, config) {
-        console.log("config:", config);
         var elements,
             createInstance,
             instances = [],
