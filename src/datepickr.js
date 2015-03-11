@@ -35,6 +35,8 @@ var datepickr = function (element, config) {
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
 
+    var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
     this.date = {
         current: {
             year: function () {
@@ -60,7 +62,7 @@ var datepickr = function (element, config) {
             numDays: function (month) {
                 // checks to see if february is a leap year otherwise return the respective # of days
                 var month = month || self.currentMonthView;
-                return month === 1 && (((self.currentYearView % 4 === 0) && (self.currentYearView % 100 !== 0)) || (self.currentYearView % 400 === 0)) ? 29 : self.l10n.daysInMonth[month];
+                return month === 1 && (((self.currentYearView % 4 === 0) && (self.currentYearView % 100 !== 0)) || (self.currentYearView % 400 === 0)) ? 29 : daysInMonth[month];
             }
         }
     }
@@ -75,7 +77,8 @@ datepickr.prototype = {
         altInput: null,
         minDate: null,
         maxDate: null,
-        shorthandCurrentMonth: false
+        shorthandCurrentMonth: false,
+        firstDayOfWeek: 0
     },
 
     currentDate: new Date(),
@@ -194,7 +197,7 @@ datepickr.prototype = {
 
     buildWeekdays: function () {
         var weekdayContainer = document.createElement('thead'),
-            firstDayOfWeek = this.l10n.firstDayOfWeek,
+            firstDayOfWeek = this.config.firstDayOfWeek,
             weekdays = this.l10n.weekdays.shorthand;
 
         if (firstDayOfWeek > 0 && firstDayOfWeek < weekdays.length) {
@@ -218,7 +221,7 @@ datepickr.prototype = {
             currentTimestamp;
 
         // Offset the first day by the specified amount
-        firstOfMonth -= this.l10n.firstDayOfWeek;
+        firstOfMonth -= this.config.firstDayOfWeek;
         if (firstOfMonth < 0) {
             firstOfMonth += 7;
         }
@@ -431,9 +434,7 @@ datepickr.prototype = {
         months: {
             shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             longhand: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        },
-        daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-        firstDayOfWeek: 0
+        }
     }
 };
 
@@ -457,6 +458,5 @@ $.datepickr = function (selector, config) {
     return instances;
 };
 
-$.fn.datepickr = function(){$.datepickr.apply(null, [this].concat(arguments));}
-
+$.fn.datepickr = function(){return $.datepickr.apply(null, [this].concat(arguments));}
 })(jQuery)
