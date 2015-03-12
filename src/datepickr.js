@@ -14,6 +14,26 @@
 (function($){
     'use strict';
 
+    $.datepickr = function (selector, config) {
+        var elements,
+            createInstance,
+            instances = [],
+            i;
+
+        createInstance = function (element) {
+            if (element._datepickr) {
+                element._datepickr.destroy();
+            }
+            element._datepickr = new datepickr(element, config);
+            instances.push(element._datepickr);
+            return element._datepickr;
+        };
+
+        $(selector).toArray().forEach(createInstance);
+
+        return instances;
+    };
+
     var datepickr = function (element, config) {
         var self = this;
 
@@ -67,7 +87,7 @@
         this.init(config || {});
     };
 
-    datepickr.prototype = {
+    $.datepickr.prototype = datepickr.prototype = {
         config: {
             dateFormat: 'F j, Y',
             altFormat: null,
@@ -138,33 +158,33 @@
         formatDate: function (dateFormat, milliseconds) {
             var formattedDate = '',
                 dateObj = new Date(milliseconds),
-                self = this,
+                l10n = this.l10n,
                 formats = {
                     d: function () {
                         var day = formats.j();
                         return (day < 10) ? '0' + day : day;
                     },
                     D: function () {
-                        return self.l10n.weekdays.shorthand[formats.w()];
+                        return l10n.weekdays.shorthand[formats.w()];
                     },
                     j: function () {
                         return dateObj.getDate();
                     },
                     l: function () {
-                        return self.l10n.weekdays.longhand[formats.w()];
+                        return l10n.weekdays.longhand[formats.w()];
                     },
                     w: function () {
                         return dateObj.getDay();
                     },
                     F: function () {
-                        return self.monthToStr(formats.n() - 1, false);
+                        return datepickr.prototype.monthToStr(formats.n() - 1, false);
                     },
                     m: function () {
                         var month = formats.n();
                         return (month < 10) ? '0' + month : month;
                     },
                     M: function () {
-                        return self.monthToStr(formats.n() - 1, true);
+                        return datepickr.prototype.monthToStr(formats.n() - 1, true);
                     },
                     n: function () {
                         return dateObj.getMonth() + 1;
@@ -461,25 +481,7 @@
         }
     };
 
-    $.datepickr = function (selector, config) {
-        var elements,
-            createInstance,
-            instances = [],
-            i;
-
-        createInstance = function (element) {
-            if (element._datepickr) {
-                element._datepickr.destroy();
-            }
-            element._datepickr = new datepickr(element, config);
-            instances.push(element._datepickr);
-            return element._datepickr;
-        };
-
-        $(selector).toArray().forEach(createInstance);
-
-        return instances;
-    };
-
-    $.fn.datepickr = function(){return $.datepickr.apply(null, [this].concat([].slice.call(arguments)));}
+    $.fn.datepickr = function(){
+        return $.datepickr.apply(null, [this].concat([].slice.call(arguments)));
+    }
 })(jQuery)
