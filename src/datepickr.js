@@ -274,7 +274,7 @@
 
             // Add spacer to line up the first day of the month correctly
             if (firstOfMonth > 0) {
-                var days = this.date.month.numDays(~this.currentMonthView-1?this.currentMonthView-1:11);
+                var days = this.date.month.numDays(~(this.currentMonthView-1)?this.currentMonthView-1:11);
                 for(var i = firstOfMonth-1; i >= 0; i--)
                     row.innerHTML += '<td class="prev-month"><span class="datepickr-day" data-prev-month>'+(days-i)+'</span></td>';
             }
